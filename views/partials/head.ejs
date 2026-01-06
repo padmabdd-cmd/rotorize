@@ -1,0 +1,65 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Rotorize Aviation">
+
+<title><%= meta.title %> | Rotorize Aviation</title>
+<meta name="description" content="<%= meta.description || '' %>">
+<link rel="canonical" href="<%= meta.canonical || site.url %>">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_IN">
+<meta property="og:site_name" content="Rotorize Aviation">
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= meta.ogTitle || meta.title %>">
+<meta property="og:description" content="<%= meta.ogDescription || meta.description %>">
+<meta property="og:image" content="<%= meta.ogImage || (site.url + '/images/og-default.jpg') %>">
+<meta property="og:url" content="<%= meta.canonical || site.url %>">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<%= meta.ogTitle || meta.title %>">
+<meta name="twitter:description" content="<%= meta.ogDescription || meta.description %>">
+<meta name="twitter:image" content="<%= meta.ogImage || (site.url + '/images/og-default.jpg') %>">
+
+<!-- Favicon & Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Rotorize Aviation",
+  "url": "<%= site.url %>",
+  "logo": "<%= site.url %>/images/logo.png",
+  "sameAs": [
+    "https://www.facebook.com/yourpage",
+    "https://www.instagram.com/yourpage",
+    "https://www.linkedin.com/company/yourpage"
+  ]
+}
+</script>
+
+<!-- Optional Dynamic Schema -->
+<% if (meta.schema) { %>
+<script type="application/ld+json">
+<%- JSON.stringify(meta.schema) %>
+</script>
+<% } %>
+
+<!-- Google Analytics -->
+<% if (site.gaId) { %>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= site.gaId %>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '<%= site.gaId %>', { anonymize_ip: true });
+</script>
+<% } %>
+

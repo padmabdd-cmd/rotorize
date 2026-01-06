@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { 
+      meta: {
+        title: "Application Status | Rotorize Aviation Admin",
+        description: "Admin panel to manage, review and update student applications for DGCA certified drone pilot training.",
+        keywords: "admin, rotorize aviation admin, application management, drone pilot applications, rotorize aviation",
+        noindex: true, 
+        url: "https://rotorize.in/application/admin/status"
+      },
+      site: site 
+  }) %>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #00b894;
+      --muted: #6b7280;
+      --bg: #f8fafb;
+    }
+    body { font-family:'Poppins',sans-serif; margin:0; background:var(--bg); color:#111; padding:20px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+    h1 { margin:0; color:var(--accent); font-weight:600; }
+    .table-wrap { background:#fff; border-radius:10px; box-shadow:0 6px 20px rgba(12,12,12,0.06); overflow:auto; }
+    table { width:100%; border-collapse:collapse; min-width:900px; }
+    th,td { padding:12px 14px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+    th { background:var(--accent); color:#fff; text-transform:uppercase; font-size:12px; letter-spacing:0.6px; }
+    tr:hover td { background:#fbfff9; }
+    .nowrap { white-space:nowrap; }
+    select,button,textarea { font-family:inherit; }
+    select {
+      padding:6px 10px;
+      border-radius:6px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      font-size:14px;
+      cursor:pointer;
+      min-width:140px;
+    }
+    textarea {
+      width:180px;
+      padding:6px 10px;
+      resize:vertical;
+      border:1px solid #d1d5db;
+      border-radius:6px;
+      font-size:13px;
+    }
+    button {
+      background:var(--accent);
+      border:none;
+      padding:6px 16px;
+      border-radius:6px;
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      margin-left:6px;
+      transition: opacity .2s;
+    }
+    button:hover { opacity:.85; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Update Application Status</h1>
+  <div>Total Applicants: <strong><%= applications.length %></strong></div>
+</header>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Course</th>
+        <th>Status</th>
+        <th>Admin Notes</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (!applications || applications.length === 0) { %>
+        <tr><td colspan="6" style="text-align:center; padding:24px;">No applications found</td></tr>
+      <% } else { %>
+
+        <% applications.forEach(app => { %>
+          <tr>
+            <td class="nowrap"><%= app.username %></td>
+            <td><%= app.fullName %></td>
+            <td class="nowrap"><%= app.course %></td>
+
+            <td>
+              <form action="/application/admin/status/<%= app._id %>" method="POST" style="display:flex; align-items:center;">
+                <select name="status" required>
+                  <option value="Submitted"           <%= app.status === "Submitted" ? "selected" : "" %>>Submitted</option>
+                  <option value="Under Review"        <%= app.status === "Under Review" ? "selected" : "" %>>Under Review</option>
+                  <option value="Documents Pending"   <%= app.status === "Documents Pending" ? "selected" : "" %>>Documents Pending</option>
+                  <option value="Approved"            <%= app.status === "Approved" ? "selected" : "" %>>Approved</option>
+                  <option value="Rejected"            <%= app.status === "Rejected" ? "selected" : "" %>>Rejected</option>
+                  <option value="Enrolled"            <%= app.status === "Enrolled" ? "selected" : "" %>>Enrolled</option>
+                </select>
+            </td>
+
+            <td>
+                <textarea name="adminNotes" minlength="0" maxlength="500"><%= app.adminNotes %></textarea>
+            </td>
+
+            <td>
+                <button type="submit">Save</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

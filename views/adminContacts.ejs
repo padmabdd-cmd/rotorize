@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title || "Contact Messages | Admin" %></title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f8f9fa; color: #333; padding: 20px; margin: 0; }
+    h1 { color: #007bff; text-align: center; margin-bottom: 20px; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; vertical-align: top; }
+    th { background: #007bff; color: white; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
+    tr:hover { background: #e6f0ff; }
+    .date { color: #666; font-size: 0.9rem; }
+
+    /* Reply styles */
+    .reply-box textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+
+    .reply-box button {
+      margin-top: 8px;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .replied {
+      color: #28a745;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fff; box-shadow: 0 1px 5px rgba(0,0,0,0.05); padding: 10px; }
+      td { display: flex; justify-content: space-between; padding: 10px 5px; border: none; border-bottom: 1px solid #eee; }
+      td:last-child { border-bottom: none; }
+      td::before { content: attr(data-label); font-weight: 600; color: #007bff; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>📩 Contact Messages</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact Number</th>
+        <th>Email</th>
+        <th>Message / Reply</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% let list = messages || []; %>
+
+      <% if (list.length === 0) { %>
+        <tr>
+          <td colspan="5" style="text-align:center; padding:20px;">No messages yet</td>
+        </tr>
+      <% } else { %>
+
+        <% list.forEach(msg => { %>
+          <tr>
+            <td data-label="Name"><%= msg.name %></td>
+            <td data-label="Contact Number"><%= msg.phone %></td>
+            <td data-label="Email"><%= msg.email %></td>
+
+            <td data-label="Message / Reply">
+              <p><%= msg.message %></p>
+
+              <% if (msg.adminReply && msg.adminReply.length > 0) { %>
+                <p class="replied">
+                  ✔ Replied<br>
+                  <small><%= msg.adminReply %></small>
+                </p>
+              <% } else { %>
+                <form
+                  class="reply-box"
+                  method="POST"
+                  action="/contact/admin/reply/<%= msg._id %>"
+                >
+                  <textarea
+                    name="reply"
+                    placeholder="Type admin reply here..."
+                    required
+                  ></textarea>
+                  <button type="submit">Send Reply</button>
+                </form>
+              <% } %>
+            </td>
+
+            <td data-label="Date" class="date">
+              <%= new Date(msg.createdAt || msg.date).toLocaleString() %>
+            </td>
+          </tr>
+        <% }) %>
+
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>

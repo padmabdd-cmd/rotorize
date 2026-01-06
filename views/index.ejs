@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { meta: meta, site: site }) %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Preload hero video poster -->
+  <link rel="preload" as="image" href="/images/hero-poster.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome non-blocking -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background-color: #ff9a00;
+    }
+
+    /* ========== INLINE NAVBAR FIXED HERE ========== */
+    .site-navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1200;
+      background: transparent;
+    }
+
+    .container-navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px; /* reduced for space */
+    }
+
+    .brand img {
+      height: 85px;
+      width: auto;
+      cursor: pointer;
+      filter: drop-shadow(0 0 10px rgba(255,215,0,0.8));
+      transition: transform .25s ease;
+      border-radius: 50%; /* CIRCLE LOGO */
+    }
+
+    .brand img:hover { transform: scale(1.06); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 18px; /* slightly reduced */
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      color: #000000 !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      padding: 8px 10px;
+      text-shadow: 0 0 6px rgba(255,215,0,0.45);
+      transition: 0.25s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #000000 !important;
+      transform: scale(1.08);
+      text-shadow: 
+        0 0 10px rgba(255,215,0,0.75),
+        0 0 18px rgba(255,215,0,0.55);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #000000 !important;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 960px) {
+      .container-navbar { padding: 12px 20px; }
+      .brand img { height: 95px; }
+
+      .menu-toggle { display: block; }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 74%;
+        max-width: 320px;
+        background: #ffffff;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 22px;
+        padding: 20px;
+        transition: right .36s ease;
+      }
+
+      .nav-links.active { right: 0; }
+
+      .nav-links li a {
+        font-size: 1.45rem !important;
+        color: #000000 !important;
+        text-shadow: 0 0 8px rgba(255,215,0,0.4);
+      }
+    }
+
+    .logo-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2200;
+    }
+
+    .logo-overlay.active { display: flex; }
+
+    .logo-popup { text-align: center; padding: 22px; }
+    .logo-popup img { width: 250px; border-radius: 8px; }
+    .logo-popup h2 { margin-top: 14px; color: #ffd700; font-size: 1.9rem; }
+    .logo-popup p { color: #ffe8a3; margin-top: 6px; font-weight: 600; }
+
+    /* ----------- HERO STYLE REMAINS SAME ----------- */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .hero video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(60%);
+      transform: scale(1.1);
+      animation: subtleZoom 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes subtleZoom {
+      from { transform: scale(1.1); }
+      to { transform: scale(1.02); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      animation: fadeInUp 1.5s ease-out forwards;
+      padding: 0 10px;
+    }
+
+    .hero-content h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      animation: glowPulse 3s infinite alternate;
+      color: #fff;
+      text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff, 0 0 20px #00bfff;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 0;
+      animation-delay: 0.5s;
+    }
+
+    .explore-btn {
+      position: absolute;
+      bottom: 40px;
+      right: 50px;
+      background: linear-gradient(135deg, #ffcc00, #ffb300, #e6a100);
+      color: #fff;
+      padding: 14px 38px;
+      font-size: 1.15rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      z-index: 3;
+      transition: all 0.35s ease;
+      box-shadow: 0 0 20px rgba(255, 204, 0, 0.6), 0 0 40px rgba(230, 161, 0, 0.4);
+      animation: goldPulse 2.5s ease-in-out infinite alternate;
+    }
+
+    @media(max-width:768px){
+      .hero-content h1 { font-size:2.5rem; }
+      .hero-content p { font-size:1rem; }
+      .explore-btn {
+        bottom: 25px;
+        right: 25px;
+        padding: 10px 25px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ============= INLINE NAVBAR START ============= -->
+<header>
+  <nav class="site-navbar" role="navigation" aria-label="Main navigation">
+    <div class="container-navbar">
+      <div class="brand">
+        <a href="/" aria-label="Rotorize Aviation home">
+          <img src="/images/logo2.png" alt="Rotorize Aviation Logo" id="siteLogo">
+        </a>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <ul class="nav-links" id="navLinks" role="menu" aria-hidden="true">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/testimonials">Testimonials</a></li>
+        <li><a href="/application">Application</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div class="logo-overlay" id="logoOverlay">
+  <div class="logo-popup">
+    <img src="/images/logo2.png" alt="Rotorize Aviation Enlarged Logo">
+    <h2 id="logoTitle">ROTORIZE AVIATION</h2>
+    <p>RISE OF INDIAN RPAS</p>
+  </div>
+</div>
+<!-- ============= INLINE NAVBAR END ============= -->
+
+
+<script>
+(function(){
+  const siteLogo = document.getElementById('siteLogo');
+  const logoOverlay = document.getElementById('logoOverlay');
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+  });
+
+  siteLogo.addEventListener('click', (e) => {
+    if (!e.ctrlKey && !e.metaKey) e.preventDefault();
+    logoOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  logoOverlay.addEventListener('click', (e) => {
+    if (e.target === logoOverlay) {
+      logoOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  });
+})();
+</script>
+
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <video autoplay muted loop playsinline preload="metadata" poster="/images/hero-poster.webp">
+    <source src="/videos/drone.webm" type="video/webm">
+    <source src="/videos/drone.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="hero-content">
+    <h1>ROTORIZE AVIATION</h1>
+    <p>DGCA Approved Drone Training & Professional Aerial Services</p>
+  </div>
+
+  <a href="/services" class="explore-btn" aria-label="Explore Services">Explore</a>
+</section>
+
+<%- include("partials/footer") %>
+
+</body>
+</html>

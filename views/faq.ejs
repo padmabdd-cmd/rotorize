@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { meta: meta, site: site }) %>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #ff9a00 !important;  /* ✅ GLOBAL BACKGROUND */
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+
+
+    /* ---------- HERO SECTION ---------- */
+    .page-hero {
+      position: relative;
+      height: 75vh;
+      background: url('/images/drone.jpeg') center center / cover no-repeat fixed;  /* ✅ YOUR ORIGINAL IMAGE */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    .page-hero h1,
+    .page-hero p {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero h1 {
+      animation-delay: 0.2s;
+      font-size: 3rem;
+      color: #001f4d;
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 40px #00bfff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 15px;
+      animation: glowPulse 3s infinite alternate, fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero p {
+      color: #fff;
+      font-size: 1.2rem;
+      animation-delay: 0.5s;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 10px #00bfff; }
+      to { text-shadow: 0 0 30px #00ffff; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- FAQ SECTION (ENHANCED) ---------- */
+    .faq-section {
+      padding: 80px 20px;
+      text-align: center;
+      background-color: #ff9a00 !important; /* ✅ KEEP GLOBAL */
+    }
+
+    .faq-section h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0,191,255,0.6);
+      margin-bottom: 50px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Replace existing .faq-card rules with this block */
+    .faq-card {
+       background: #ffffff;
+       color: #000;
+       border: 2px solid #00bfa6;
+       border-radius: 15px;
+       padding: 22px;
+       cursor: pointer;
+       box-shadow: 0 0 15px rgba(0, 255, 200, 0.08);
+       transform: translateY(20px) translateX(0) scale(0.98);               opacity: 0;
+       transition: transform 0.6s cubic-bezier(.2,.9,.2,1), opacity 0.6s        ease;
+       text-align: left;
+     }
+
+/* Left / Right initial offsets for alternating pattern */
+    .faq-card:nth-child(odd) {
+       transform: translateX(-60px) translateY(20px) scale(0.98);
+     }
+
+     .faq-card:nth-child(even) {
+        transform: translateX(60px) translateY(20px) scale(0.98);
+      }
+
+      .faq-card.visible {
+        transform: translateX(0) translateY(0) scale(1);
+        opacity: 1;
+        box-shadow: 0 12px 35px rgba(0, 255, 200, 0.18);
+      }
+
+
+    /* small helper to hide inline answer (for screen readers available) */
+    .sr-only { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+    /* ---------- MODAL ---------- */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+    .modal-content { background: linear-gradient(145deg, #e0f7fa, #b2ebf2); color: #001a33; border-radius: 15px; padding: 25px; width: 520px; max-width: 94%; text-align: left; box-shadow: 0 0 40px rgba(0,0,0,0.2); }
+    .modal-content h3{ margin-top:0 }
+    .close { float: right; font-size: 1.5rem; cursor: pointer; color: #333; }
+
+    /*+ ---------- HELP BUTTONS ---------- */
+    .help-buttons { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 10px; z-index: 3000; }
+    .help-buttons button { border: none; background: #00bfa6; color: #fff; font-size: 1.3rem; border-radius: 50%; width: 55px; height: 55px; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 15px rgba(0,255,200,0.3); }
+
+    @media (max-width: 768px) { .page-hero { height: 60vh; } .page-hero h1 { font-size: 2.2rem; margin: 0 15px; } .page-hero p { margin: 0 15px; } }
+  </style>
+</head>
+
+<body>
+  <%- include("partials/navbar"); %>
+
+  <section class="page-hero">
+    <h1>FREQUENTLY ASKED QUESTIONS</h1>
+    <p>Quick answers about DGCA certification, eligibility, fees and training process</p>
+  </section>
+
+  <!-- ENHANCED FAQ SECTION INSERTED BELOW -->
+  <section class="faq-section">
+    <h2>Got Questions? We’ve Got Answers</h2>
+
+    <% const faqs = [
+      {q:"What services do you provide?", a:"We offer aerial mapping, inspection, surveillance, and training for DGCA-certified drone pilots."},
+      {q:"Are your drone pilots certified?", a:"Yes, all our drone operators are certified under DGCA norms and safety standards."},
+      {q:"Can you provide real-time aerial monitoring?", a:"Yes, our drones are equipped for real-time data streaming and monitoring operations."},
+      {q:"Do you offer drone training programs?", a:"Yes, we conduct DGCA-approved drone training programs for beginners and professionals."},
+      {q:"What industries do you serve?", a:"We work with agriculture, infrastructure, power, renewable energy, and public safety sectors."},
+      {q:"Do you conduct drone surveys for construction sites?", a:"Yes, we offer detailed topographical and progress monitoring drone surveys."},
+      {q:"How accurate is drone mapping?", a:"Our drones can achieve centimeter-level accuracy with RTK and PPK technologies."},
+      {q:"Can you inspect wind turbines?", a:"Absolutely! We specialize in aerial inspection of wind turbines for blade damage and performance checks."},
+      {q:"Do you provide 3D mapping?", a:"Yes, our photogrammetry software converts aerial data into 3D surface models."},
+      {q:"How do you handle data security?", a:"All client data is encrypted and stored on secure cloud infrastructure."},
+      {q:"Can drones operate at night?", a:"Only under DGCA-approved permissions and with specialized equipment for low-light conditions."},
+      {q:"What is your turnaround time?", a:"Depending on project size, most operations are completed within 2–5 working days."},
+      {q:"Do you provide thermal imaging?", a:"Yes, we use FLIR-equipped drones for thermal inspections of industrial assets."},
+      {q:"Can we request custom flight paths?", a:"Yes, we can pre-program flight missions as per your site’s layout."},
+      {q:"What weather conditions are suitable?", a:"We operate only in safe wind and visibility conditions approved by DGCA."},
+      {q:"How can I book your service?", a:"You can reach out through our Contact page or call our support team directly."},
+      {q:"Do you assist with drone permissions?", a:"Yes, we handle DGCA airspace permissions and safety documentation."},
+      {q:"Can we integrate your data into GIS software?", a:"Yes, we provide output compatible with AutoCAD, ArcGIS, and QGIS formats."},
+      {q:"Do you offer subscription-based services?", a:"Yes, we provide monthly and annual maintenance inspection plans."},
+      {q:"What is your coverage area?", a:"We currently operate across India with specialized teams in major cities."}
+    ]; %>
+
+    <div class="faq-grid">
+      <% faqs.forEach(function(faq, index) { %>
+        <div class="faq-card" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-<%= index %>" onclick="openModal(<%= index %>)" onkeydown="if(event.key==='Enter'||event.key===' ') openModal(<%= index %>)">
+          <h3><%= faq.q %></h3>
+          <div id="faq-<%= index %>" class="sr-only"><%= faq.a %></div>
+        </div>
+      <% }); %>
+    </div>
+  </section>
+
+  <!-- FAQ MODAL -->
+  <div id="faqModal" class="modal" aria-hidden="true">
+    <div class="modal-content" id="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalQuestion">
+      <span class="close" onclick="closeModal(event)" tabindex="0" role="button">&times;</span>
+      <h3 id="modalQuestion"></h3>
+      <p id="modalAnswer"></p>
+    </div>
+  </div>
+
+  <!-- HELP BUTTONS -->
+  <div class="help-buttons">
+    <button onclick="openHelp()" aria-label="Open help">❓</button>
+
+    <button onclick="window.location.href='/contact'" aria-label="Contact us">📞</button>
+  </div>
+
+  <%- include("partials/footer"); %>
+
+  <script>
+     const defaultHelp = {
+  q: "Need Help?",
+  a: "Click on any question to view detailed answers about DGCA certification, drone training programs, services, eligibility, and operations. You can also contact our team for personalized support."
+};
+function openHelp() {
+  modalQ.textContent = defaultHelp.q;
+  modalA.textContent = defaultHelp.a;
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+    // FAq data (rendered server-side into the page)
+    const faqs = <%- JSON.stringify(faqs) %>;
+
+    // Modal & accessibility
+    const modal = document.getElementById('faqModal');
+    const modalQ = document.getElementById('modalQuestion');
+    const modalA = document.getElementById('modalAnswer');
+
+    function openModal(index) {
+      modalQ.textContent = faqs[index].q;
+      modalA.textContent = faqs[index].a;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+      // focus the close button for keyboard users
+      const closeBtn = modal.querySelector('.close');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal(e) {
+  if (!modal) return;
+
+  const target = e?.target;
+
+  if (!target || target === modal || target.classList.contains('close')) {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+
+    modalQ.textContent = '';
+    modalA.textContent = '';
+  }
+}
+
+
+
+    // Close on ESC and arrow navigation for cards
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (modal.style.display === 'flex') {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      // keyboard navigation within FAQ cards
+      const cards = Array.from(document.querySelectorAll('.faq-card'));
+      const active = document.activeElement;
+      if (cards.includes(active)) {
+        const idx = cards.indexOf(active);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          cards[Math.min(idx + 1, cards.length - 1)].focus();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          cards[Math.max(idx - 1, 0)].focus();
+        }
+      }
+    });
+
+    // Reveal animations using IntersectionObserver
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.faq-card').forEach(card => observer.observe(card));
+
+    // close modal when clicking outside
+    const faqModal = document.getElementById('faqModal');
+    if (faqModal) faqModal.addEventListener('click', closeModal);
+
+    // navbar scroll behavior
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (!nav) return;
+      if (window.scrollY > 60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+  </script>
+</body>
+</html>

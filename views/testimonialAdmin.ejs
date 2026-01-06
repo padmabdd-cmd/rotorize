@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Analytics</title>
+  <style>
+    body { background:#0d1117; color:white; font-family:Poppins; padding:20px; }
+    table { width:100%; border-collapse:collapse; background:#111; }
+    th, td { padding:10px; border-bottom:1px solid #333; vertical-align: top; }
+    th { background:#00ffff; color:black; }
+    select, button { padding:6px; }
+    button { cursor:pointer; }
+  </style>
+</head>
+
+<body>
+
+<h1>📊 Testimonial Analytics Dashboard</h1>
+
+<!-- ===============================
+     PENDING REQUESTS
+=============================== -->
+<h2>🟠 Pending Requests</h2>
+
+<table>
+<tr>
+  <th>Name</th>
+  <th>Email</th>
+  <th>Card</th>
+  <th>Reason</th>
+  <th>Unlock Time</th>
+  <th>Action</th>
+</tr>
+
+<% requests.forEach(r => { %>
+<tr>
+  <td><%= r.name %></td>
+  <td><%= r.email %></td>
+  <td><%= r.cardNumber %></td>
+  <td><%= r.reason %></td>
+
+  <!-- Unlock Duration -->
+  <td>
+    <form
+      action="/admin/testimonials/approve/<%= r._id %>"
+      method="POST"
+      id="approve_<%= r._id %>"
+    >
+      <select name="minutes">
+        <option value="5">5 Minutes</option>
+      </select>
+  </td>
+
+  <!-- Approve Button -->
+  <td>
+      <button style="background:green;color:white;border:none;padding:6px 12px;">
+        Approve
+      </button>
+    </form>
+  </td>
+</tr>
+<% }) %>
+
+</table>
+
+<!-- ===============================
+     ACTIVE APPROVED CARDS
+=============================== -->
+<h2>✅ Active Approved Cards</h2>
+
+<table>
+<tr>
+  <th>Email</th>
+  <th>Card</th>
+  <th>Views</th>
+  <th>Expiry</th>
+  <th>View Logs</th>
+</tr>
+
+<% approvedCards.forEach(a => { %>
+<tr>
+  <td><%= a.email %></td>
+  <td><%= a.cardNumber %></td>
+  <td><%= a.viewCount %></td>
+  <td><%= new Date(a.expiresAt).toLocaleString() %></td>
+  <td>
+    <% a.viewLogs.forEach(v => { %>
+      <div>
+        <%= v.ip %> — <%= new Date(v.viewedAt).toLocaleString() %>
+      </div>
+    <% }) %>
+  </td>
+</tr>
+<% }) %>
+
+</table>
+
+</body>
+</html>

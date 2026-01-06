@@ -1,0 +1,82 @@
+<footer>
+  <div class="footer-container">
+    <p>© 2022 <strong>Rotorize Aviation</strong> | 
+      <a href="mailto:info@rotorize.in">rotorize.aviation.rpto@gmail.com</a>
+    </p>
+
+    <div class="footer-social">
+      <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Font Awesome (if not already included globally) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 30px 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  footer p {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+  }
+
+  footer a {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: #ff66b2;
+    text-shadow: 0 0 10px rgba(255, 102, 178, 0.7);
+  }
+
+  .footer-social {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .footer-social a {
+    color: #00ffff;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .footer-social a:hover {
+    color: #ff66b2;
+    transform: scale(1.2);
+    text-shadow: 0 0 20px #ff66b2, 0 0 40px #ff99cc;
+  }
+
+  @media (max-width: 768px) {
+    footer {
+      padding: 20px 5px;
+    }
+    footer p {
+      font-size: 0.85rem;
+    }
+    .footer-social a {
+      font-size: 1.1rem;
+    }
+  }
+</style>

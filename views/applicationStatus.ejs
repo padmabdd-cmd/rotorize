@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { 
+      meta: {
+        title: "Track Application Status | Rotorize Aviation",
+        description: "Check your DGCA drone pilot training application status, including review updates, approval progress, and admin notes.",
+        keywords: "drone pilot application status, rotorize application, track application, DGCA drone training status",
+        url: "https://rotorize.in/application/status",
+      },
+      site: site 
+  }) %>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family:'Poppins', sans-serif;
+      margin:0;
+      padding:40px;
+      background:#f8fafb;
+      color:#111;
+    }
+
+    .container {
+      max-width:850px;
+      margin:0 auto;
+      background:#fff;
+      border-radius:12px;
+      padding:30px;
+      box-shadow:0 6px 20px rgba(18,18,18,0.08);
+    }
+
+    h1 {
+      margin-top:0;
+      color:#00b894;
+      font-weight:600;
+      text-align:center;
+      margin-bottom:28px;
+    }
+
+    .field {
+      margin-bottom:14px;
+    }
+
+    .label {
+      font-size:14px;
+      color:#6b7280;
+      font-weight:600;
+    }
+
+    .value {
+      font-size:16px;
+      padding:6px 0;
+    }
+
+    .status-box {
+      margin-top:24px;
+      padding:16px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:18px;
+      text-align:center;
+    }
+
+    /* status colors */
+    .Submitted { background:#d1fae5; color:#065f46; }
+    .Under\ Review { background:#fef3c7; color:#92400e; }
+    .Documents\ Pending { background:#fef9c3; color:#854d0e; }
+    .Approved { background:#dcfce7; color:#14532d; }
+    .Rejected { background:#fee2e2; color:#991b1b; }
+    .Enrolled { background:#e0f2fe; color:#075985; }
+
+    .note-box {
+      margin-top:20px;
+      padding:14px;
+      background:#f3f4f6;
+      border-radius:8px;
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    .note-title {
+      font-weight:600;
+      margin-bottom:6px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Application Status</h1>
+
+    <!-- ============================ -->
+    <!-- BASIC APPLICATION DETAILS -->
+    <!-- ============================ -->
+    <div class="field">
+      <div class="label">Application ID</div>
+      <div class="value"><%= app._id %></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Full Name</div>
+      <div class="value"><%= app.fullName %></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Course Applied</div>
+      <div class="value"><%= app.course %></div>
+    </div>
+
+
+    <!-- ============================ -->
+    <!-- CURRENT STATUS -->
+    <!-- ============================ -->
+    <div class="status-box <%= app.status.replace(' ', '\\ ') %>">
+      <%= app.status %>
+    </div>
+
+
+    <!-- ============================ -->
+    <!-- ADMIN NOTES (optional) -->
+    <!-- ============================ -->
+    <% if (app.adminNotes && app.adminNotes.trim() !== "") { %>
+      <div class="note-box">
+        <div class="note-title">Admin Notes:</div>
+        <div><%= app.adminNotes %></div>
+      </div>
+    <% } %>
+
+  </div>
+
+</body>
+</html>

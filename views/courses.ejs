@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { meta: meta, site: site }) %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #ff9a00;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .page-hero {
+      position: relative;
+      height: 80vh;
+      background: url('/images/drone.jpeg') center center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    .page-hero h1,
+    .page-hero p {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero h1 {
+      animation-delay: 0.2s;
+      font-size: 3rem;
+      color: #001f4d;
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 40px #00bfff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 15px;
+      animation: glowPulse 3s infinite alternate, fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero p {
+      color: #fff;
+      font-size: 1.2rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+      animation-delay: 0.5s;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 40px #00bfff; }
+      to { text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .courses-section {
+      background-color: #ff9a00;
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .courses-section h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+      margin-bottom: 50px;
+      font-weight: 700;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .course-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ffffff;
+      border: 2px solid #00bfa6;
+      border-radius: 15px;
+      padding: 25px 35px;
+      margin: 20px auto;
+      max-width: 1000px;
+      transition: 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.15);
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .course-card:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .course-card.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease-out;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.4);
+    }
+
+    .course-icon {
+      font-size: 2.8rem;
+      color: #00bfa6;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: rgba(0, 191, 166, 0.1);
+      border-radius: 50%;
+    }
+
+    .course-content {
+      flex: 1;
+      margin: 0 25px;
+      text-align: center;
+    }
+
+    .course-content h3 {
+      color: #003c2b;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      font-family: 'Merriweather', serif;
+    }
+
+    .course-content p {
+      color: #333;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .course-image {
+      flex-shrink: 0;
+      width: 280px;
+      height: 180px;
+      overflow: hidden;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .course-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0, 191, 255, 0.3);
+      transition: transform 0.4s ease;
+    }
+
+    .course-image img:hover {
+      transform: scale(1.05);
+    }
+
+    .floating-video {
+      position: fixed;
+      left: 25px;
+      bottom: 25px;
+      width: 360px;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .floating-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .page-hero { height: 65vh; background-attachment: scroll; }
+      .page-hero h1 { font-size: 2rem; margin: 0 10px; }
+      .page-hero p { font-size: 1rem; padding: 0 15px; }
+
+      .course-card {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 25px 20px;
+      }
+
+      .course-image {
+        width: 100%;
+        height: 200px;
+        margin-top: 20px;
+      }
+
+      .floating-video {
+        width: 240px;
+        height: 140px;
+        left: 10px;
+        bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+  <%- include("partials/navbar"); %>
+
+  <section class="page-hero">
+    <h1>COURSES</h1>
+    <p>DGCA-approved and specialized drone training programs for pilots and professionals.</p>
+  </section>
+
+  <section class="courses-section">
+    <h2>Explore Our Training Programs</h2>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="course-content">
+        <h3>DGCA Approved Drone Pilot</h3>
+        <p>Learn drone fundamentals, DGCA rules, simulator training, and basic flight operations with hands-on guidance.</p>
+      </div>
+      <div class="course-image">
+        <img src="/images/drone_training.jpeg" alt="Drone pilot field training">
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+      <div class="course-content">
+        <h3>Ground Training Program</h3>
+        <p>Master theoretical concepts including aerodynamics, aviation regulations, safety procedures, and mission planning — all taught through structured classroom sessions.</p>
+      </div>
+      <div class="course-image">
+        <img src="/images/ground_training.jpeg" alt="Ground training classroom session">
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-helmet-safety"></i></div>
+      <div class="course-content">
+        <h3>Field Training Program</h3>
+        <p>Hands-on field training to perform drone maneuvers, assess weather, manage safety protocols, and gain real-world operational experience.</p>
+      </div>
+      <div class="course-image">
+        <img src="/images/feild_training.jpeg" alt="Field drone training">
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-map-marked-alt"></i></div>
+      <div class="course-content">
+        <h3>Outdoor Drone Mission Training</h3>
+        <p>Gain real-time experience conducting outdoor drone operations. Learn mission setup, live flight coordination, environmental awareness, and field data management through practical sessions guided by certified instructors.</p>
+      </div>
+      <div class="course-image">
+        <img src="/images/outdoor_drone_mission_training.jpeg" alt="Outdoor drone mission training">
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-vr-cardboard"></i></div>
+      <div class="course-content">
+        <h3>FPV Drone Program</h3>
+        <p>Learn first-person view (FPV) flying, advanced control techniques, and high-speed maneuvers for racing and cinematic performance.</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-camera"></i></div>
+      <div class="course-content">
+        <h3>Photography and Aerial Short Training Program</h3>
+        <p>Learn aerial photography, videography techniques, and creative drone camera control to capture stunning visuals from above.</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-life-ring"></i></div>
+      <div class="course-content">
+        <h3>Advanced Drone Rescue Operational Assistance Program</h3>
+        <p>Get trained in drone-assisted rescue missions, emergency response coordination, and real-time aerial assessment.</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-database"></i></div>
+      <div class="course-content">
+        <h3>Post-Crash Drone Log Assistance and Investigation Program</h3>
+        <p>Learn how to analyze flight logs, recover data, and optimize investments for future drone operations.</p>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-taxi"></i></div>
+      <div class="course-content">
+        <h3>Drone Taxi Design Program</h3>
+        <p>Understand the fundamentals of drone taxi design, aerodynamics, and prototype development for future air mobility.</p>
+      </div>
+    </div>
+
+    <!-- ⭐ NEW COURSE ADDED BELOW (ONLY CHANGE MADE) -->
+    <div class="course-card">
+      <div class="course-icon"><i class="fas fa-briefcase"></i></div>
+      <div class="course-content">
+        <h3>Entrepreneurship & Skill Building in Drone Applications</h3>
+        <p>
+          A complete program designed to help aspiring drone entrepreneurs build essential technical,
+          operational, and business skills. Learn how to launch drone-based services such as surveying,
+          cinematography, agriculture analytics, inspections, and more — supported by real-world project guidance.
+        </p>
+      </div>
+      
+    </div>
+    <!-- ⭐ END OF NEW COURSE -->
+
+  </section>
+
+  <div class="floating-video">
+    <video autoplay muted loop playsinline disablePictureInPicture controlsList="nodownload noplaybackrate nofullscreen">
+      <source src="/videos/outdoor-mission_training.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <%- include("partials/footer"); %>
+
+  <script>
+    const courseCards = document.querySelectorAll('.course-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    courseCards.forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("partials/head", { meta: meta, site: site }) %>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #ff9a00 !important;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    .page-hero {
+      position: relative;
+      height: 80vh;
+      background: url('/images/drone.jpeg') center center / cover no-repeat fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 1;
+    }
+
+    .page-hero h1,
+    .page-hero p {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero h1 {
+      animation-delay: 0.2s;
+      font-size: 3rem;
+      color: #001f4d;
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .page-hero p {
+      animation-delay: 0.5s;
+      font-size: 1.2rem;
+      max-width: 700px;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .application-section {
+      background: transparent !important;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .application-section h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    /* ✅ UPDATED FORM */
+    .application-form {
+      max-width: 900px;
+      margin: 0 auto;
+      background: transparent;
+      color: #fff;
+      border-radius: 18px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 40px;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* ✅ HOVER EFFECT */
+    .application-form:hover {
+      background: rgba(255, 154, 0, 0.25);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .application-form label {
+      font-weight: 600;
+      color: #000;
+    }
+
+    .application-form input,
+.application-form select,
+.application-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.75); /* ✅ softer white */
+  color: #000;
+  font-size: 1rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .application-form input:focus,
+    .application-form textarea:focus,
+    .application-form select:focus {
+      outline: none;
+      box-shadow: 0 0 8px rgba(255, 154, 0, 0.9);
+    }
+
+    .application-form button {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #ff9a00, #ff7a00);
+      color: #fff;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .application-form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+
+    .application-form textarea {
+      grid-column: span 2;
+      resize: none;
+    }
+
+    @media (max-width: 768px) {
+      .application-form {
+        grid-template-columns: 1fr;
+      }
+      .application-form button,
+      .application-form textarea {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <%- include("partials/navbar"); %>
+
+  <section class="page-hero">
+    <h1>APPLICATION FORM</h1>
+    <p>Submit your details to enroll in our DGCA-certified drone training programs</p>
+  </section>
+
+  <section class="application-section">
+    <h2>Apply Now</h2>
+
+    <form class="application-form" id="applicationForm" enctype="multipart/form-data">
+
+      <div>
+        <label>Username *</label>
+        <input type="text" name="username" required>
+      </div>
+
+      <div>
+        <label>Full Name *</label>
+        <input type="text" name="fullName" required>
+      </div>
+
+      <div>
+        <label>Email *</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div>
+        <label>Contact Number *</label>
+        <input type="tel" name="contactNumber" required>
+      </div>
+
+      <div>
+        <label>Aadhaar Card Number *</label>
+        <input type="text" name="aadhaarNumber" required>
+      </div>
+
+      <div>
+        <label>10th Pass Certificate *</label>
+        <input type="file" name="tenthPassCertificate" required>
+      </div>
+
+      <div>
+        <label>Medical Certificate *</label>
+        <input type="file" name="medicalCertificate" required>
+      </div>
+
+      <div>
+        <label>Approved ID Cards *</label>
+        <input type="file" name="idCards" multiple required>
+      </div>
+
+      <div>
+        <label>Passport Photo *</label>
+        <input type="file" name="passportPhoto" required>
+      </div>
+
+      <div>
+        <label>Select Course *</label>
+        <select name="course" required>
+          <option value="">-- Select --</option>
+          <option value="basic">Basic</option>
+          <option value="advanced">Advanced</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+      </div>
+
+      <div style="grid-column: span 2;">
+        <label>Additional Information *</label>
+        <textarea name="additionalInfo" rows="4" required></textarea>
+      </div>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </section>
+
+  <%- include("partials/footer"); %>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("applicationForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      Swal.fire({ title: "Submitting...", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+      const res = await fetch("/application/submit", { method: "POST", body: formData });
+      const data = await res.json();
+
+      res.ok
+        ? Swal.fire("Success", `Application ID: ${data.appId}`, "success")
+        : Swal.fire("Error", data.message || "Failed", "error");
+    });
+  </script>
+</body>
+</html>

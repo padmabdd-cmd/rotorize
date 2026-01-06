@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ✅ Core SEO Metadata -->
+  <title>Rotorize Aviation | Drone Training & Industry Insights Blogs</title>
+  <meta name="description" content="Explore Rotorize Aviation’s latest blogs on drone technology, DGCA certification, AI integration, defense applications, and India’s drone future.">
+  <meta name="keywords" content="drone training India, DGCA certified drone pilot, drone technology blogs, Rotorize Aviation, drone applications 2025, drone policy India">
+  <meta name="author" content="Rotorize Aviation">
+  <meta property="og:title" content="Rotorize Aviation Blogs">
+  <meta property="og:description" content="Get insights and updates on drone innovations, pilot training, and India’s UAV ecosystem.">
+  <meta property="og:image" content="/images/drone.jpeg">
+  <meta property="og:url" content="https://www.rotorizeaviation.com/blogs">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Rotorize Aviation Blogs",
+    "url": "https://www.rotorizeaviation.com/blogs",
+    "description": "Expert blogs on drone technology, DGCA certifications, and aerial innovations by Rotorize Aviation.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Rotorize Aviation",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.rotorizeaviation.com/images/logo.png"
+      }
+    }
+  }
+  </script>
+
+  <!-- Include site head -->
+  <%- include("partials/head", { meta: meta, site: site }) %>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #ff9a00;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ---------- HERO ---------- */
+    .page-hero {
+      position: relative;
+      height: 80vh;
+      background: url('/images/drone.jpeg') center center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    .page-hero h1, .page-hero p {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero h1 {
+      animation-delay: 0.2s;
+      font-size: 3rem;
+      color: #001f4d;
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 40px #00bfff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 15px;
+      animation: glowPulse 3s infinite alternate, fadeInUp 1s ease-out forwards;
+    }
+
+    .page-hero p {
+      color: #fff;
+      font-size: 1.2rem;
+      animation-delay: 0.5s;
+      max-width: 700px;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 10px #00bfff; }
+      to { text-shadow: 0 0 20px #00ffff; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+   
+
+    /* ---------- BLOG CARDS ---------- */
+    .blogs-section {
+      background-color: transparent;
+      padding: 80px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .blogs-section h2 {
+  font-family: 'Merriweather', serif;
+  font-size: 2rem;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+  margin-bottom: 50px;
+  animation: fadeInUp 1s ease-out; /* ⭐ Added animation to match template */
+}
+.blog-card {
+  background: rgba(255, 255, 255, 0); /* fully transparent */
+  color: #000;
+  border-radius: 15px;
+  border: none;  /* ⭐ border removed */
+  margin: 25px auto;
+  padding: 30px;
+  max-width: 900px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: all 0.8s ease-out, background 0.35s ease;
+  text-align: left;
+  opacity: 0;
+  transform: translateX(0);
+}
+
+/* Same animation rules */
+.blog-card:nth-child(odd) { transform: translateX(-100px); }
+.blog-card:nth-child(even) { transform: translateX(100px); }
+.blog-card.show { opacity: 1; transform: translateX(0); }
+
+/* ⭐ Hover effect with soft orange glow */
+
+.blog-card:hover {
+  background: rgba(255, 255, 255, 0.12); /* light glowing shade */
+  backdrop-filter: blur(4px); /* optional smooth glass glow */
+  box-shadow: 0 4px 25px rgba(255, 255, 255, 0.2); /* soft glow */
+}
+
+
+    
+/* ---------- POPUP OVERLAY ---------- */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto; /* IMPORTANT: Page scroll when popup is tall */
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
+.popup-overlay.active {
+  display: flex;
+}
+
+
+/* ---------- POPUP BOX ---------- */
+.popup-content {
+  position: relative;
+  background: linear-gradient(180deg, rgba(10,25,47,0.98) 0%, rgba(6,18,35,0.98) 100%);
+  border-radius: 18px;
+  color: #e8f9ff;
+  width: 95%;
+  max-width: 850px;
+  max-height: 90vh;      /* ✨ Keeps popup inside screen */
+  
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0,255,255,0.25);
+  box-shadow: 0 0 40px rgba(0,255,200,0.45), 0 0 120px rgba(0,191,255,0.08) inset;
+
+  animation: popupPop 0.5s cubic-bezier(.2,.9,.2,1) forwards;
+  overflow: hidden;
+  transform-origin: center top;
+}
+
+/* Glow rim */
+.popup-content::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, rgba(0,255,200,0.06), transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ---------- POPUP IMAGE ---------- */
+.popup-image {
+  width: 100%;
+  height: auto;
+  max-height: 350px;      /* ✨Reduced slightly for better content space */
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  background: #000;
+  
+  filter: contrast(1.02) saturate(1.05);
+  transition: transform 0.8s ease, filter 0.6s ease;
+}
+
+.popup-image.zoom {
+  transform: scale(1.03);
+  filter: contrast(1.06) saturate(1.08) brightness(1.02);
+}
+
+
+/* ---------- SCROLLABLE BODY ---------- */
+.popup-body {
+  padding: 25px 35px;
+  overflow-y: auto;       /* ✨ MAIN FIX */
+  flex: 1;                /* ✨ Forces scroll inside popup, not outside */
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensures scrollbar is visible on all browsers */
+.popup-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.popup-body::-webkit-scrollbar-thumb {
+  background: rgba(0,255,255,0.28);
+  border-radius: 10px;
+}
+
+
+/* ---------- TEXT ---------- */
+.popup-body h3 {
+  margin-top: 0;
+  text-shadow: 0 0 8px rgba(0,255,255,0.12);
+}
+
+
+/* ---------- CLOSE BUTTON ---------- */
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #00ffff;
+
+  transition: 0.25s;
+  z-index: 20000;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.popup-close:hover {
+  color: #b8fff0;
+  transform: scale(1.12);
+  box-shadow: 0 0 18px rgba(0,255,200,0.18);
+}
+
+
+/* ---------- PREV / NEXT BUTTONS ---------- */
+.popup-nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  position: absolute;
+  left: 18px;
+  top: 14px;
+  z-index: 20000;
+}
+
+.popup-nav button {
+  background: linear-gradient(180deg, rgba(0,255,210,0.08), rgba(0,255,210,0.02));
+  color: #e8fbf7;
+  border: 1px solid rgba(0,255,200,0.18);
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+  font-weight: 600;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.popup-nav button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,255,200,0.12);
+}
+
+.popup-nav button:focus,
+.popup-close:focus {
+  outline: 2px solid rgba(0,255,200,0.18);
+  outline-offset: 2px;
+}
+
+
+/* ---------- ANIMATION ---------- */
+@keyframes popupPop {
+  0% { opacity: 0; transform: translateY(28px) scale(0.96); }
+  60% { transform: translateY(-8px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .popup-image {
+    max-height: 200px;
+  }
+
+  .popup-body {
+    padding: 18px 20px;
+  }
+
+  .popup-nav {
+    left: 12px;
+    top: 10px;
+  }
+
+  .popup-close {
+    right: 12px;
+    top: 10px;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+<%- include("partials/navbar"); %>
+
+<section class="page-hero">
+  <h1>BLOGS</h1>
+  <p>Insights, updates, and stories from the world of drones and aerial technology.</p>
+</section>
+
+<section class="blogs-section" id="blogs">
+  <h2>Latest Posts</h2>
+
+  <div class="blog-card" data-blog="future-2030"><h3>The Future of Drone Technology in India by 2030</h3></div>
+  <div class="blog-card" data-blog="dgca-certification"><h3>Why DGCA Certification Matters for Drone Pilots</h3></div>
+  <div class="blog-card" data-blog="industrial-dromes"><h3>Top 5 Industrial Applications of Drones in 2025</h3></div>
+  <div class="blog-card" data-blog="agriculture-revolution"><h3>How Drones Are Revolutionizing Indian Agriculture</h3></div>
+  <div class="blog-card" data-blog="drone-logistics"><h3>The Rise of Drone Logistics in India</h3></div>
+  <div class="blog-card" data-blog="ai-integration"><h3>AI Integration in Drone Systems</h3></div>
+  <div class="blog-card" data-blog="defense-sector"><h3>Drones in India’s Defense and Security Sector</h3></div>
+  <div class="blog-card" data-blog="policy-updates"><h3>India’s Latest Drone Policy Updates</h3></div>
+</section>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-content" role="dialog" aria-modal="true">
+
+    <!-- Navigation Buttons -->
+    <div class="popup-nav" id="popupNav">
+      <button id="prevBtn">&larr; Previous</button>
+      <button id="nextBtn">Next &rarr;</button>
+    </div>
+
+    <!-- Close Button -->
+    <span class="popup-close" id="popupClose">&times;</span>
+
+    <!-- Image (NOT inside scroll body) -->
+    <img id="popupImage" class="popup-image">
+
+    <!-- Scrollable Body -->
+    <div id="popupBody" class="popup-body">
+      <h3 id="popupTitle"></h3>
+      <div id="popupText"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<%- include("partials/footer"); %>
+
+<script>
+  const blogs = {
+    "future-2030": {
+      title: "The Future of Drone Technology in India by 2030",
+      img: "/images/blog1.jpeg",
+      content: `
+        <p>India is entering what many experts call the “Drone Decade,” a period between 2025 and 2035 where drones will reshape industries just like smartphones did a decade earlier. With strong government push through Drone Shakti, PLI schemes, Make-in-India initiatives, and RPTO expansion, drones are rapidly moving from niche tools to mainstream technological assets that support economic development across the country.</p>
+
+<p>By 2030, drones are expected to become a common part of daily life in both urban and rural India. From agriculture and logistics to public safety and construction, their presence will be widespread. Agriculture will experience the biggest impact, with drones enabling precision spraying, AI-based crop monitoring, seed dropping, soil analytics, and automated farm surveillance. These advancements will create high-demand roles such as drone pilots, agri-technicians, data analysts, and field inspectors.</p>
+
+<p>Logistics will evolve dramatically as drone corridors, droneports, and BVLOS missions become routine. Medical delivery, emergency supplies, and last-mile logistics will be fully automated across many regions. India will witness a new breed of professionals — BVLOS planners, operation managers, fleet controllers, and drone traffic coordinators — forming the backbone of futuristic logistics networks.</p>
+
+<p>Infrastructure, utilities, and construction will also rely extensively on drones. Highways, bridges, powerlines, railways, and metro networks will use UAVs for 3D mapping, thermal inspections, digital twins, and predictive maintenance. With the rise of renewable energy, drones will play a major role in inspecting solar farms, wind turbines, and pipelines, creating opportunities for thermal specialists, GIS engineers, and survey experts.</p>
+
+<p>During disasters, drones will become indispensable for search-and-rescue, flood mapping, wildfire tracking, and emergency response. AI-driven surveillance drones will support police forces with crowd monitoring, traffic management, and public safety operations. This will open roles such as emergency drone pilots, disaster-response analysts, and public-safety UAV operators.</p>
+
+<p>On the hardware side, India will progress toward more advanced propulsion systems, including hydrogen fuel cells, solid-state batteries, longer-endurance motors, and quieter propellers. Manufacturing will shift to advanced composites, lightweight alloys, and even self-healing materials by the mid-2030s. This will demand new engineering roles — battery specialists, propulsion designers, composite material engineers, and avionics technicians.</p>
+
+<p>Software innovation will be even faster. Autonomous flight systems, swarm intelligence, obstacle avoidance AI, and cloud-managed fleet dashboards will dominate the market. Computer vision, machine learning, and cybersecurity will be critical to future drone operations. This will generate high-paying jobs such as AI engineers, ROS2 developers, CV specialists, cloud architects, and security analysts.</p>
+
+<p>For young Indians aged 18–40, the drone sector offers one of the best future-proof career paths. There are opportunities for DGCA-certified pilots, hardware technicians, GIS specialists, developers, mechatronics engineers, and more. Salaries range widely — from ₹20,000 for entry-level technicians to ₹35 LPA for AI/ML roles, and beyond for senior engineers.</p>
+
+<p>Building the right skill set is crucial. Hardware-focused learners should master electronics, soldering, CAD tools, mission planning, and drone tuning. Software enthusiasts should study Python, ML, OpenCV, ROS2, and cloud platforms. And everyone entering the field should undergo DGCA training for legal compliance and safety expertise.</p>
+
+<p>By 2030 and beyond, India will witness drone highways, autonomous security grids, smart agricultural ecosystems, and long-endurance delivery drones. Those who begin preparing today will become the innovators, entrepreneurs, and leaders of this fast-growing industry. The future belongs to the ones who fly first.</p>`
+
+    },
+    "dgca-certification": {
+      title: "Why DGCA Certification Matters for Drone Pilots",
+      img: "/images/blog2.png",
+      content: `
+        <p>India is rapidly transitioning into a logistics ecosystem where drones play a central role in how goods are transported across cities, villages, and remote terrains. What began as pilot experiments in early 2020 has evolved into operational corridors, district-level droneports, and state-supported medical-delivery networks by 2025. Drone logistics is now reshaping supply chains by making them faster, cheaper, greener, and more resilient.</p>
+
+<p>This growth has been driven by several critical factors. The DGCA has streamlined BVLOS permissions through corridor-based rules and SORA assessment frameworks, significantly reducing approval delays. At the same time, indigenous drone manufacturing has surged, creating long-range multirotors and VTOL drones capable of carrying 3–20 kg payloads over 20–120 km routes. With Make-in-India policies and reduced costs, organizations can finally deploy logistics drones at scale.</p>
+
+<p>Healthcare has become India’s most successful drone logistics segment. Long-range BVLOS drones routinely transport vaccines, medicines, diagnostic samples, and emergency supplies across the North-East, Himalayan belts, and remote rural areas. During floods, cyclones, and landslides, drones have become life-saving assets by ensuring uninterrupted medical access where ground vehicles cannot operate.</p>
+
+<p>Agriculture logistics is undergoing a similar transformation. Farmers and FPOs increasingly use drones to receive seeds, fertilizers, pesticides, and emergency inputs, especially during monsoons or in difficult terrains. Remote farm belts in Maharashtra, Meghalaya, Uttarakhand, and Jharkhand have adopted drone logistics to eliminate delays and reduce losses.</p>
+
+<p>The e-commerce industry is rapidly integrating drones into hyperlocal deliveries, rural last-mile operations, and high-priority express shipments. Major players such as Amazon India, Swiggy, Zomato, Blue Dart, and Shadowfax are testing or expanding rooftop-to-rooftop delivery routes across Bengaluru, Hyderabad, and Gurugram.</p>
+
+<p>Drones have also become critical in disaster-response missions. During natural calamities, they transport food, medicines, and communication tools to affected populations. In the defense sector, logistics drones support ammunition transport, reconnaissance supply, and high-altitude resupply missions. Indigenous VTOL platforms now meet the Indian Armed Forces’ specific endurance and range requirements.</p>
+
+<p>Despite progress, key challenges remain — BVLOS restrictions, weather unpredictability, payload constraints, battery limitations, pilot shortages, and high equipment costs. However, Indian manufacturers are advancing rapidly to solve these issues through modular payloads, autonomous charging docks, stronger airframes, redundant navigation systems, and AI-based flight optimization.</p>
+
+<p>DGCA-certified RPTOs like Rotorize Aviation are playing a crucial role in building a trained logistics workforce. Their programs focus on BVLOS mission planning, emergency operations, SORA-based safety evaluation, corridor navigation, and compliance workflows, ensuring safe and professional operations.</p>
+
+<p>Looking ahead, drone logistics in India will expand dramatically. By 2030, the country may see autonomous drone highways, district-level drone hubs, app-based rural delivery networks, medical micro-ambulance drones, and smart-city docking stations integrated with e-commerce and healthcare systems. With hybrid hydrogen and solar drones offering multi-hour endurance, the future of logistics is airborne.</p>
+
+<p>India is entering a transformative decade in mobility where drones are not just enhancing logistics — they are redefining it. The shift is not optional; it is inevitable. For millions living in remote areas, drones will deliver access, equality, and life-saving connectivity.</p>
+
+      `
+    },
+    "industrial-dromes": {
+      title: "Top 5 Industrial Applications of Drones in 2025",
+      img: "/images/blog3.png",
+      content: `
+        <p>By 2025, India has moved beyond experimental drone usage and entered a phase of large-scale industrial adoption. With strong government support through Drone Shakti, Make-in-India, and new regulatory reforms, industries now rely heavily on drones for precision, safety, and operational efficiency. The question is no longer whether drones should be used but how fast companies can scale them.</p>
+
+<p>Agriculture remains one of the largest industrial applications. Drones are used for pesticide spraying, fertilizer distribution, seed dropping, crop analytics, and yield prediction. DGCA-certified agri drones ensure safer and more efficient spraying, while manufacturers introduce intelligent spray systems, NDVI-based health monitoring, and long-endurance batteries. RPTOs such as Rotorize Aviation strengthen the ecosystem by training pilots in drift control, chemical safety, and SORA-based farm risk assessment.</p>
+
+<p>Infrastructure and construction projects depend on drones for land surveys, mapping, digital twins, progress monitoring, and cut-fill analysis. With massive national projects — Bharatmala highways, industrial corridors, metro expansions — drones offer unmatched speed and accuracy. Indian manufacturers now produce RTK-enabled mapping drones with 2–4 cm precision, while RPTOs train pilots in advanced mission planning and GIS workflows.</p>
+
+<p>Industrial inspection has become another high-value drone application. Powerlines, solar farms, wind turbines, and oil & gas pipelines require frequent monitoring. Drones equipped with thermal, RGB, and dual-sensor payloads detect cracks, hotspots, leakages, and structural faults. Manufacturers are focusing on rugged IP-rated industrial platforms, while RPTOs train pilots in thermal analysis, emergency procedures, and hazard-zone safety.</p>
+
+<p>Logistics and medical delivery are rapidly expanding due to India’s need for efficient rural connectivity. BVLOS-enabled drones deliver medicines, samples, parcels, and essential supplies across rural and remote regions. VTOL drones with 20–60 km range are being deployed nationwide, supported by Digital Sky, drone corridors, and DGCA compliance frameworks. RPTOs are building a skilled BVLOS workforce for safe long-range missions.</p>
+
+<p>Public safety and disaster response have adopted drones for search-and-rescue, night surveillance, traffic monitoring, crowd control, and post-disaster mapping. With recurring floods, landslides, and forest fires, drones provide real-time situational awareness and reduce risk to human teams. Indian manufacturers are producing night-vision, thermal, and long-range surveillance drones, while RPTOs train emergency operators in coordinated missions.</p>
+
+<p>Though industrial adoption is growing, challenges persist — shortage of trained pilots, unsafe operations, illegal imported drones, permission hurdles, and inconsistent data practices. However, Indian manufacturers and RPTOs are closing these gaps by creating safer hardware, stronger autopilot systems, AI-based analytics, and structured, DGCA-compliant training pathways.</p>
+
+<p>The year 2025 marks the maturity of India’s industrial drone ecosystem. With unified efforts from manufacturers and RPTOs, the country is building a highly skilled drone workforce capable of supporting agriculture, infrastructure, energy, logistics, and public safety — establishing drones as essential tools for national development.</p>
+
+      `
+    },
+    "agriculture-revolution": {
+      title: "How Drones Are Revolutionizing Indian Agriculture",
+      img: "/images/blog4.jpg",
+      content: `
+        <p>Indian agriculture is undergoing a major transformation, driven by labour shortages, rising input costs, and climate-related uncertainties. Drones have emerged as essential tools for modern precision farming, offering faster operations, lower costs, and data-driven decision-making. With greater government support, indigenous manufacturing, and DGCA-certified training programs, 2025 marks the breakout year for large-scale agri-drone adoption.</p>
+
+<p>One of the biggest shifts is in precision spraying. Drones now perform targeted, uniform spraying up to 10 times faster than manual methods while reducing exposure to harmful chemicals. States including Punjab, Telangana, Karnataka, and Maharashtra are deploying spraying drones widely. Manufacturers have introduced AI-based spray control, terrain-following sensors, and real-time flow adjustments, while RPTOs train operators in safety, drift control, and standardized spraying patterns.</p>
+
+<p>Drones are revolutionizing crop health monitoring through multispectral and RGB imaging. Farmers now detect pest attacks early, measure plant health using NDVI algorithms, and generate accurate yield forecasts. Government programs increasingly rely on drone analytics for crop insurance, drought mapping, disease hotspot detection, and climate-resilience planning.</p>
+
+<p>Soil and land mapping have become critical pre-sowing applications. High-precision drones produce contour maps, elevation models, slope analysis, and moisture profiles vital for irrigation planning, land leveling, watershed management, and government audits. Manufacturers offer modular mapping payloads, while RPTOs train pilots in Mission Planner, QGIS, RTK workflows, and DGCA-compliant mapping rules.</p>
+
+<p>Agricultural logistics is emerging quickly, especially in remote regions. Drones deliver seeds, fertilizers, and emergency supplies to inaccessible farm belts. Hybrid VTOL platforms with greater range and payload capacity are expanding the scope of rural logistics, supported by early BVLOS trials in hilly and tribal regions.</p>
+
+<p>Smart irrigation is another major benefit. Drones help identify over-irrigated and water-stressed regions, allowing farmers to optimize water usage and improve drip-line placement. Water-scarce regions in Maharashtra, Telangana, Rajasthan, and Bundelkhand increasingly rely on drone-based water analysis.</p>
+
+<p>Despite rapid progress, challenges persist. High drone costs restrict small farmers, lack of trained pilots leads to unsafe flying, sensor costs slow adoption, and limited awareness reduces usage. However, community hiring models, subsidies, indigenous R&D, and RPTO-led training programs are actively solving these barriers.</p>
+
+<p>RPTOs like Rotorize Aviation are strengthening the ecosystem through DGCA-certified RRPC courses, field-ready mission planning modules, safety training, real-life simulations, and compliance education to prepare pilots for Drone Rules 2025.</p>
+
+<p>Drones have moved beyond experimentation — they are becoming the backbone of modern Indian agriculture. With improved technology, stronger policies, and growing farmer awareness, drones will remain one of the most impactful agricultural tools of the next decade.</p>
+
+
+      `
+    },
+    "drone-logistics": {
+      title: "The Rise of Drone Logistics in India",
+      img: "/images/blog5.png",
+      content: `
+        <p>India’s drone sector is entering its strictest regulatory era, and the DGCA’s upcoming Drone Rules Amendment 2025 will transform how pilots operate. Casual or untrained flying will no longer be tolerated, as the DGCA strengthens enforcement through real-time monitoring, AI-based tracking, and counter-drone systems. Certification is becoming the only shield pilots have against penalties, drone seizure, and legal consequences.</p>
+
+<p>The new regulations bring tighter norms for unauthorized filming, city operations, BVLOS flights, geofence violations, and using uncertified drones. Penalties will rise sharply, including fines, FIRs, UIN suspension, and immediate drone confiscation. Only DGCA-certified pilots will be allowed to take paid projects, participate in government work, or operate in regulated zones without legal risk.</p>
+
+<p>DGCA is also implementing modern monitoring systems. RF spectrum scanners detect remote controllers several kilometers away, Remote ID receivers track drone position and pilot identity, and AI-enabled CCTVs identify unauthorized flights. Counter-drone guns in sensitive zones can forcibly ground illegal aircraft. This technological shift ensures that non-compliant flyers cannot operate undetected.</p>
+
+<p>Given these changes, DGCA certification is no longer optional. It provides legal authorization, industry credibility, insurance validity, and access to high-paying corporate and government projects. As regulations tighten, uncertified pilots—no matter how experienced—will face frequent operational blocks and potential legal disputes.</p>
+
+<p>The complexity of modern drone operations demands trained professionals. Understanding airspace rules, SORA risk analysis, emergency procedures, NMAC avoidance, and compliance workflows requires structured training that only RPTOs can provide. Untrained operators are increasingly seen as liabilities rather than assets.</p>
+
+<p>RPTOs like Rotorize Aviation play a crucial role in shaping safe and compliant drone operations. Their programs include mission planning, emergency simulations, risk modelling, geo-fence mapping, and real-world drills. They prepare pilots not only to fly drones but to manage complex technical, operational, and regulatory requirements.</p>
+
+<p>From 2025 onward, corporate tenders, government missions, infrastructure surveys, and agricultural contracts will require DGCA-certified pilots. Insurance companies will reject claims for uncertified operations. Companies will hire exclusively from recognized RPTOs to avoid legal exposure, making certification essential for a stable drone career.</p>
+
+<p>The message for India’s drone community is clear: fly smart or don’t fly at all. DGCA certification provides legal protection, professional respect, and long-term security. As enforcement expands nationwide, only compliant pilots will thrive, while illegal flying will result in penalties and career-ending consequences.</p>
+
+<p>In the new regulatory landscape, DGCA certification is the foundation of every successful drone career. It represents competence, discipline, and safety — values the industry now depends on. Those who prepare today will lead the drone revolution of tomorrow.</p>
+
+      `
+    },
+    "ai-integration": {
+      title: "AI Integration in Drone Systems",
+      img: "/images/blog6.jpg",
+      content: `
+        <p>Artificial Intelligence (AI) is transforming drones from remotely controlled machines into intelligent, autonomous systems capable of decision-making, adaptation, and complex mission execution. In India’s rapidly growing drone ecosystem, AI integration is becoming the defining factor that separates basic UAV operations from next-generation aerial intelligence.</p>
+
+<p>Traditionally, drones relied heavily on human pilots for navigation, obstacle avoidance, data interpretation, and mission control. With AI, drones can now analyze their surroundings in real time, learn from data patterns, and respond dynamically without constant human input. This shift is revolutionizing industries such as agriculture, infrastructure, defense, logistics, and public safety.</p>
+
+<p>One of the most impactful AI applications in drones is computer vision. AI-powered cameras enable drones to recognize objects, detect anomalies, identify crops, spot cracks in infrastructure, track vehicles, and even recognize human movement patterns. Using deep learning models, drones can process thousands of images mid-flight and generate actionable insights instantly.</p>
+
+<p>In agriculture, AI-enabled drones analyze crop health using multispectral and RGB data to detect pest infestations, nutrient deficiencies, water stress, and disease outbreaks. Instead of blanket spraying, AI allows precision treatment, reducing chemical usage and increasing yields. Farmers receive AI-generated reports with exact intervention zones, improving efficiency and sustainability.</p>
+
+<p>Infrastructure and industrial inspections have also been transformed by AI integration. Drones equipped with AI can automatically identify cracks in bridges, hotspots in solar panels, corrosion in pipelines, and faults in power transmission lines. AI eliminates manual image inspection, reduces human error, and significantly speeds up maintenance decisions.</p>
+
+<p>Autonomous navigation is another breakthrough enabled by AI. Advanced drones now use AI-based obstacle avoidance, terrain-following algorithms, SLAM (Simultaneous Localization and Mapping), and predictive flight planning. These capabilities allow safe flying in complex environments such as cities, forests, construction sites, and disaster zones — even where GPS signals are weak or unavailable.</p>
+
+<p>AI plays a critical role in BVLOS (Beyond Visual Line of Sight) operations. AI-driven risk assessment, dynamic rerouting, weather analysis, and traffic avoidance systems make long-range drone missions safer and more reliable. These technologies are essential for drone logistics, medical delivery, and large-scale surveillance operations in India.</p>
+
+<p>Swarm intelligence is an emerging AI application where multiple drones coordinate autonomously to complete tasks collectively. Inspired by nature, swarm drones can map large areas, conduct defense surveillance, perform search-and-rescue missions, and monitor borders far more efficiently than a single drone. India’s defense and security agencies are actively exploring AI-powered swarm capabilities.</p>
+
+<p>AI also enhances drone data analytics. Cloud-based AI platforms convert raw aerial data into 3D models, orthomosaics, heat maps, volumetric calculations, and predictive insights. This allows government bodies, enterprises, and researchers to make faster, data-driven decisions across sectors.</p>
+
+<p>Despite its advantages, AI integration in drones presents challenges. High computational requirements, data security risks, algorithm bias, limited onboard processing power, and regulatory constraints remain key concerns. However, advances in edge AI, lightweight processors, secure communication protocols, and indigenous R&D are steadily overcoming these barriers.</p>
+
+<p>India’s drone future depends heavily on AI-ready professionals. The industry now demands pilots and engineers who understand not just flying, but also AI workflows, sensor integration, data interpretation, and autonomous systems. DGCA-certified training combined with AI-focused skill development is becoming essential for career growth.</p>
+
+<p>Rotorize Aviation integrates AI awareness into its training philosophy by preparing pilots and professionals for the future of intelligent drone operations. Understanding AI-driven systems, autonomous safety protocols, and data-centric missions ensures that trainees remain industry-ready in an evolving regulatory and technological landscape.</p>
+
+<p>As AI continues to advance, drones will become smarter, safer, and more autonomous. From self-learning flight systems to fully autonomous drone networks, AI will define the next decade of aerial innovation. The integration of AI in drone systems is not just an upgrade — it is the foundation of the future UAV ecosystem.</p>
+
+      `
+    },
+    
+"defense-sector": {
+  title: "Drones in India’s Defense and Security Sector",
+  img: "/images/blog7.jpeg",
+  content: `
+    <p>Drones have become indispensable assets in India’s defense and security ecosystem. They enable real-time surveillance, intelligence gathering, and rapid-response operations across borders and high-risk zones. Modern UAVs equipped with EO/IR sensors, thermal cameras, and long-endurance batteries allow armed forces to monitor vast territories with unmatched accuracy.</p>
+
+    <p>India is increasingly focused on indigenous UAV development to reduce dependency on foreign defense systems. Make-in-India-supported companies are building tactical drones, long-range surveillance UAVs, swarm drones, and high-altitude platforms specifically designed for Indian terrains and mission requirements. This push is strengthening self-reliance and accelerating defense innovation.</p>
+
+    <p>Border forces such as BSF, CRPF, and ITBP use drones daily for patrolling, infiltration detection, night surveillance, and monitoring illegal activities. High-altitude capable drones support operations in Ladakh, Arunachal Pradesh, and other challenging terrains where human surveillance is difficult.</p>
+
+    <p>Defense drones are also transforming counter-terrorism operations. Swarm drones, AI-enabled target detection, and autonomous reconnaissance systems allow teams to assess threats before entering conflict zones. This reduces risk to personnel and increases mission precision.</p>
+
+    <p>Drones play a crucial role in disaster-relief operations as well — from locating survivors and delivering emergency supplies to assessing damage in flood, earthquake, and cyclone-affected regions. Their ability to access areas inaccessible to ground vehicles makes them essential for national emergency responses.</p>
+
+    <p>The Indian Army, Navy, and Air Force are investing heavily in UAV training. Specialized programs teach pilots mission planning, night operations, tactical flying, LOS/BVLOS protocols, and secure communication handling. This ensures that personnel operate drones safely and strategically in critical missions.</p>
+
+    <p>Rotorize Aviation contributes to this ecosystem by offering defense-focused UAV modules that emphasize compliance, safety, mission readiness, and equipment familiarization. These programs align with India’s long-term vision for a robust indigenous drone defense capability.</p>
+
+    <p>With rapid advancements in AI, propulsion systems, payload miniaturization, and autonomous navigation, drones will continue to redefine India’s defense posture. As threats evolve, UAVs will serve as frontline tools that enhance situational awareness, operational speed, and national security.</p>
+  `
+},
+
+    "policy-updates": {
+  title: "India’s Latest Drone Policy Updates",
+  img: "/images/blog8.jpg",
+  content: `
+    <p>India has entered a decisive phase in its drone journey, marked by progressive policy reforms that balance innovation, safety, and national security. Over the past few years, the Government of India and the Directorate General of Civil Aviation (DGCA) have steadily refined drone regulations to transform the country into a global drone hub. The latest policy updates reflect a clear shift — from restrictive oversight to structured enablement.</p>
+
+    <p>One of the most impactful milestones remains the Drone Rules, 2021, which replaced the earlier UAS Rules with a simplified and digital-first framework. The number of required forms was reduced drastically, approval timelines were shortened, and compliance processes were centralized through the Digital Sky platform. These changes lowered entry barriers for startups, pilots, and service providers while maintaining strict airspace safety.</p>
+
+    <p>Recent updates further strengthen operational clarity. Airspace has been categorized into Green, Yellow, and Red zones with clearer permissions and automated approvals in many Green Zone areas. Most routine commercial operations now fall under simplified workflows, enabling faster mission planning and execution. This has significantly benefited agriculture spraying, infrastructure surveys, industrial inspections, and training operations.</p>
+
+    <p>Another major policy focus is on indigenous manufacturing. Import restrictions on fully built drones encourage domestic production, research, and innovation. Coupled with the Production Linked Incentive (PLI) scheme, this has accelerated the growth of Indian drone manufacturers producing world-class UAV platforms, payloads, and components. The policy direction clearly favors “Design, Make, and Fly in India.”</p>
+
+    <p>Training and pilot certification have also received strong regulatory attention. DGCA now strictly mandates that all commercial pilots must be trained through approved Remote Pilot Training Organisations (RPTOs). This ensures standardized safety practices, legal compliance, and operational professionalism across the industry. Certification is no longer optional — it is the foundation of a legitimate drone career.</p>
+
+    <p>Policy updates also address advanced operations such as Beyond Visual Line of Sight (BVLOS) flights, drone corridors, and logistics missions. While BVLOS operations remain carefully regulated, corridor-based approvals and sandbox trials are steadily expanding. These developments pave the way for medical deliveries, emergency logistics, and rural connectivity at scale.</p>
+
+    <p>To enhance enforcement and safety, India is integrating Remote ID, geo-fencing, real-time tracking, and counter-drone technologies. These systems allow authorities to identify unauthorized flights instantly, protect sensitive zones, and ensure accountability. As enforcement tightens, compliance becomes essential for uninterrupted operations.</p>
+
+    <p>From an industry perspective, the latest drone policy updates create long-term confidence. Startups gain regulatory clarity, investors see reduced risk, and professionals benefit from stable career pathways. Government departments increasingly rely on drones for surveys, monitoring, disaster management, and public safety, making drones an integral part of governance.</p>
+
+    <p>RPTOs like Rotorize Aviation play a critical role in bridging policy and practice. By training pilots in DGCA regulations, mission planning, airspace awareness, emergency handling, and compliance workflows, they ensure that operators are not only skilled flyers but responsible aviation professionals.</p>
+
+    <p>India’s drone policy direction is clear — promote innovation, ensure safety, strengthen self-reliance, and build a skilled workforce. As regulations continue to mature, those who stay informed, certified, and compliant will lead the next phase of India’s drone revolution.</p>
+
+    <p>The future of drones in India is no longer uncertain. With supportive policies, expanding use cases, and strong institutional backing, drones are set to become one of the most influential technologies shaping the nation’s economic and technological growth.</p>
+  `
+}
+
+  };
+
+  const blogOrder = Object.keys(blogs); // preserves insertion order above
+  const popup = document.getElementById("popup");
+  const popupBody = document.getElementById("popupBody");
+  const popupClose = document.getElementById("popupClose");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  let currentIndex = -1;
+
+  function showBlogByIndex(index) {
+    if (index < 0 || index >= blogOrder.length) return;
+    const id = blogOrder[index];
+    const blog = blogs[id];
+    currentIndex = index;
+
+    popupBody.innerHTML = `
+      <img src="${blog.img}" alt="${blog.title}" class="popup-image" loading="lazy" />
+      <div class="popup-body">
+        <h3 id="popupTitle">${blog.title}</h3>
+        ${blog.content}
+      </div>
+    `;
+
+    // slight delay so image transition class can be applied after render
+    requestAnimationFrame(() => {
+      const img = popupBody.querySelector('.popup-image');
+      if (img) img.classList.add('zoom');
+    });
+
+    updateNavButtons();
+    popup.classList.add("active");
+    document.body.style.overflow = "hidden";
+    // focus for accessibility
+    setTimeout(() => {
+      const close = document.getElementById('popupClose');
+      if (close) close.focus();
+    }, 220);
+  }
+
+  function updateNavButtons() {
+    prevBtn.disabled = (currentIndex <= 0);
+    nextBtn.disabled = (currentIndex >= blogOrder.length - 1);
+  }
+
+  document.querySelectorAll(".blog-card").forEach((card, idx) => {
+    card.addEventListener("click", () => {
+      const id = card.dataset.blog;
+      const index = blogOrder.indexOf(id);
+      if (index !== -1) showBlogByIndex(index);
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) showBlogByIndex(currentIndex - 1);
+  });
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < blogOrder.length - 1) showBlogByIndex(currentIndex + 1);
+  });
+
+  popupClose.addEventListener("click", () => {
+    popup.classList.remove("active");
+    document.body.style.overflow = "auto";
+  });
+
+  popupClose.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      popup.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  popup.addEventListener("click", e => {
+    if (e.target === popup) {
+      popup.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // keyboard navigation for next/prev
+  document.addEventListener('keydown', (e) => {
+    if (!popup.classList.contains('active')) return;
+    if (e.key === 'ArrowLeft') {
+      if (currentIndex > 0) showBlogByIndex(currentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      if (currentIndex < blogOrder.length - 1) showBlogByIndex(currentIndex + 1);
+    } else if (e.key === 'Escape') {
+      popup.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  /* ---- Scroll Reveal ---- */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll(".blog-card").forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
