@@ -1,4 +1,4 @@
-const Application = require("../models/application");
+const Application = require("../models/Application");
 const nodemailer = require("nodemailer");
 const path = require("path");
 const PDFDocument = require("pdfkit");
