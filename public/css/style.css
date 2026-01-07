@@ -238,8 +238,33 @@ button:hover, .btn:hover {
   grid-column: 1 / -1;
 }
 
-@media (max-width: 820px) {
-  .application-grid {
-    grid-template-columns: 1fr;
+/* ===========================
+   MOBILE NAVBAR ALIGNMENT FIX
+   =========================== */
+
+@media (max-width: 900px) {
+
+  /* FULL-WIDTH HEADER ON MOBILE */
+  header > .navbar,
+  header nav,
+  .navbar {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
+
+  /* FORCE LOGO LEFT */
+  header .brand {
+    margin-right: auto !important;
+    display: flex;
+    align-items: center;
+  }
+
+  /* FORCE HAMBURGER RIGHT */
+  .menu-toggle {
+    margin-left: auto !important;
+    position: relative;
+    z-index: 3000;
+  }
+
 }
