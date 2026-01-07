@@ -16,7 +16,7 @@ html, body {
 body {
   font-family: 'Poppins', sans-serif;
   color: #111;
-  background: #ff9a00 !important; /* 🔥 Global orange background */
+  background: #ff9a00 !important;
   overflow-x: hidden;
 }
 
@@ -98,6 +98,7 @@ header nav ul li a {
   padding: 6px 8px;
   transition: color 0.25s ease, transform 0.18s ease;
 }
+
 .nav-links li a:hover,
 header nav ul li a:hover {
   color: #fff;
@@ -168,9 +169,8 @@ header.scrolled {
 }
 
 /* ===========================
-   HERO FIX (Keeps content visible)
+   HERO FIX
    =========================== */
-
 .page-hero, .hero {
   padding-top: 130px;
   box-sizing: border-box;
@@ -179,7 +179,6 @@ header.scrolled {
 /* ===========================
    FORM ELEMENTS
    =========================== */
-
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -240,31 +239,28 @@ button:hover, .btn:hover {
 
 /* ===========================
    MOBILE NAVBAR ALIGNMENT FIX
+   (ONLY REQUIRED CHANGE)
    =========================== */
-
 @media (max-width: 900px) {
 
-  /* FULL-WIDTH HEADER ON MOBILE */
-  header > .navbar,
-  header nav,
-  .navbar {
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  .container-navbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
   }
 
-  /* FORCE LOGO LEFT */
-  header .brand {
+  .brand {
     margin-right: auto !important;
-    display: flex;
-    align-items: center;
   }
 
-  /* FORCE HAMBURGER RIGHT */
   .menu-toggle {
     margin-left: auto !important;
-    position: relative;
     z-index: 3000;
   }
 
+  .nav-links {
+    flex: none !important;
+    justify-content: flex-start !important;
+  }
 }

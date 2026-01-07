@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title || "404 - Page Not Found" %></title>
+    <title><%= meta?.title || "404 - Page Not Found" %></title>
+
     <meta name="description" content="<%= meta?.description || 'Page not found' %>" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
