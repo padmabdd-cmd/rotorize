@@ -15,17 +15,20 @@ const flash = require("connect-flash");
 const app = express();
 
 // ===============================
-// Server Port
+// Server Port (RENDER SAFE)
 // ===============================
 const PORT = process.env.PORT || 3000;
 
 // ===============================
-// MongoDB Connection
+// MongoDB Connection (NON-BLOCKING)
 // ===============================
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB Error:", err));
+  .catch((err) => {
+    console.error("❌ MongoDB Error:", err.message);
+    // IMPORTANT: Do NOT exit process — allow server to run
+  });
 
 // ===============================
 // Middleware
@@ -82,8 +85,7 @@ app.use((req, res, next) => {
 // ===============================
 // ROUTES
 // ===============================
-app.use("/api", require("./routes/visitorRoutes")); // 🔔 page visit tracking
-
+app.use("/api", require("./routes/visitorRoutes"));
 app.use("/contact", require("./routes/contact"));
 app.use("/application", require("./routes/application"));
 app.use("/admin", require("./routes/admin"));
@@ -143,8 +145,8 @@ app.use((req, res) => {
 });
 
 // ===============================
-// START SERVER
+// START SERVER (RENDER SAFE)
 // ===============================
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
