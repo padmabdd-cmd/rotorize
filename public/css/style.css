@@ -55,6 +55,10 @@ header .brand img,
 .brand {
   flex: 0 0 auto !important;
 }
+/* 🔧 LOGO SLIGHTLY LEFT — SAFE FIX */
+.brand {
+  margin-left: -20px;   /* adjust: -10px / -15px / -20px */
+}
 
 /* ROUND LOGO */
 .brand img {
